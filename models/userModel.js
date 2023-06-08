@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var userSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -21,6 +21,14 @@ var userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
+    },
+    IsAdmin:{
+        type:String,
+        default:"admin"
+    },
+    img:{
+        type:String,
+        default:"",
     },
 });
 
