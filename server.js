@@ -1,14 +1,19 @@
 const express = require('express');
 const app = express();
+const router = require('./-v2/routes/authRoutes');
 const v1Router = require('./-v1/v1.js');
 const v2Router = require('./-v2/v2.js');
+
+
+
 require('dotenv').config()
 const PORT = process.env.PORT || 3000
 const connectDB = require('./config/dbConfig.js')
 
 app.use('/v1',v1Router);
-
 app.use('/v2',v2Router);
+
+
 
 
 
