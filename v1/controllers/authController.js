@@ -3,6 +3,7 @@ const bcrypt = require ('bcryptjs');
 //create new user
 
 const createUser = async(req,res)=>{
+    //console.log("Register");
     try{
         const {Email, password} =req.body;
         //find user with same email
@@ -31,6 +32,7 @@ const createUser = async(req,res)=>{
 //user login
 
 const loginUser = (req, res , next) =>{
+    //console.log("login");
    const {email,password} = req.body;
    user.findOne(
     {$or: [{email},{password}]}
