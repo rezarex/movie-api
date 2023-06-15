@@ -28,7 +28,7 @@ const swaggerDefinition = {
 
   const options = {
     swaggerDefinition,
-    apis: [`${__dirname}/routes/*.js`],
+    apis: [`${__dirname}/v1/routes/*.js`],
     yaml: fs.readFileSync('./docs/swagger.yaml', 'utf-8'),
   };
   
