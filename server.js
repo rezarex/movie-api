@@ -18,7 +18,7 @@ const swaggerDefinition = {
     },
     servers: [
       {
-        url: `http://localhost:5000`,
+        url: `http://localhost:5000/`,
         //url: `https://marvin-n1cb.onrender.com/`, //--->replace with live environment
         description: 'Dev environment'
       }
@@ -28,7 +28,7 @@ const swaggerDefinition = {
 
   const options = {
     swaggerDefinition,
-    apis: [`${__dirname}/routes/*.js`],
+    apis: [`${__dirname}/v1/routes/*.js`],
     yaml: fs.readFileSync('./docs/swagger.yaml', 'utf-8'),
   };
   
