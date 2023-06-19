@@ -1,4 +1,5 @@
 const bcrypt = require ('bcryptjs');
+const User = require('../../models/userModel')
 
 //create new user
 
@@ -7,24 +8,41 @@ const createUser = async(req,res)=>{
     try{
         const {Email, password} =req.body;
         //find user with same email
-        const user = await user.findOne({ email });
+
+        /**
+         * -You had called the `user.findOne` but had not defined the user object
+         * -I have imported the userSchema and assigned to User
+         * 
+         */
+        const user = await User.findOne({ email });
         if(user){
             return res.json({ message: 'user already exists'});
         }else{
 
+            /**
+             * All encryption is now done in the schema
+             * here we dont need to deconstruct the req.body,
+             * the fields provided should reflect what is in the schema
+             * 
+             */
+
+             const newUser = User.create(req.body);
+            // res.json({newUser});
+
         //hashed password to secure user password. 
-        let hashedPassword;
-        let salt = bcrypt.genSaltSync(8);
-        hashedPassword = bcrypt.hashSync(password, salt);
+        // let hashedPassword;
+        // let salt = bcrypt.genSaltSync(8);
+        // hashedPassword = bcrypt.hashSync(password, salt);
         
-        //New user    
-        const newUser = new user(
-        {
-            Email,
-            password  : hashedPassword,
-        });
-        newUser.save();
+        // //New user    
+        // const newUser = new user(
+        // {
+        //     Email,
+        //     password  : hashedPassword,
+        // });
+       // newUser.save();
         return res.json({message:'user created successfully'});}
+
     }catch(err){
         console.log(err);
     }
