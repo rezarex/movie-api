@@ -23,7 +23,7 @@ app.use(express.json());
     },
     servers: [
       {
-        url: `http://localhost:5000`,
+        url: `http://localhost:5000/`,
         //url: `https://marvin-n1cb.onrender.com/`, //--->replace with live environment
         description: 'Dev environment'
       }

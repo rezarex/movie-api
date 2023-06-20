@@ -15,7 +15,7 @@ router.post('/register', createUser);
 
 /**
  * @swagger
- * /v1/user/register:
+ * /v1/user/login:
  *  post:
  *      summary: this is used for user registration
  *      responses:
