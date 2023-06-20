@@ -1,15 +1,20 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const swaggerJsdoc= require('swagger-jsdoc') 
+const user = require ('./')
+//including swagger modules
+const YAML = require ('yamljs')
+const swaggerJsDoc = YAML.load('./docs/api.yaml');
+//const swaggerJsdoc= require('swagger-jsdoc') 
 const swaggerUi= require('swagger-ui-express')
 //const router = require('./-v2/routes/authRoutes');
 const v1Auth = require('./v1/v1');
 //const v2Router = require('./-v2/v2.js');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc) )
 
+app.use(express.json());
 
-
-const swaggerDefinition = {
+/*const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
       title: 'Blog API',
@@ -36,22 +41,27 @@ const swaggerDefinition = {
   const swaggerSpec = swaggerJsdoc(options)
 
 
-
+*/
 require('dotenv').config()
 const PORT = process.env.PORT || 3000
 const connectDB = require('./config/dbConfig.js')
 
 app.use('/v1',v1Auth);
 //app.use('/v2',v2Router);
-app.use('/api/docs', swaggerUi.serve,swaggerUi.serve, swaggerUi.setup(swaggerSpec) )
 
 
-// app.use(notFound); //for when the page requested is not found/ is not there
+//app.use(notFound); //for when the page requested is not found/ is not there
 // app.use(errorHandler) //was app.request(errorHandler)...in case anything goes wrong
 
 
 
-
+app.post('/users', async(req,res)=>{
+  try{
+    const user = await user.create(req.body)
+  }catch(error){
+    res.status(500).json({message:error})
+  }
+} )
 
 
 

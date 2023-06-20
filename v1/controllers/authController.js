@@ -6,18 +6,20 @@ const createUser = async(req,res)=>{
     //console.log("Register");
     try{
         const {Email, password} =req.body;
-        //find user with same email
-        const user = await user.findOne({ email });
+        //find user with same email before accepting the registration details
+
+        const user = await user.findOne({ Email });
         if(user){
             return res.json({ message: 'user already exists'});
         }else{
 
-        //hashed password to secure user password. 
+        //hash password to secure users password. 
+
         let hashedPassword;
         let salt = bcrypt.genSaltSync(8);
         hashedPassword = bcrypt.hashSync(password, salt);
         
-        //New user    
+        //save new user
         const newUser = new user(
         {
             Email,
@@ -26,7 +28,7 @@ const createUser = async(req,res)=>{
         newUser.save();
         return res.json({message:'user created successfully'});}
     }catch(err){
-        console.log(err);
+        res.json({message:err})
     }
 };
 //user login
@@ -38,18 +40,19 @@ const loginUser = (req, res , next) =>{
     {$or: [{email},{password}]}
    ).then(user=>{
     if(user){
-            bcrypt.compare(password,email,function(err, result){
+            bcrypt.compare(password,email, (err, result)=>{
                 if(err){
                     res.json({
                         error:err
                     })
                 };
                 if(result){
-                    let token = jwt.sign({name: user.email}, 'secretValue',{expiresIn: '3'})
+                    let token = jwt.sign({name: user.email}, 'secretValue',{expiresIn: '4'})
                     res.json({
                         message : 'login successful',
                         token
                     })
+                    next()
                 }else{
                     res.json({
                         message: 'password does not match'
@@ -58,14 +61,11 @@ const loginUser = (req, res , next) =>{
             });
     }else{
         res.json({
-            message : "no user found"
+            message : "No user found!"
         })
     }
    })
 
 }
-
-
-
 
 module.exports = {createUser, loginUser}
