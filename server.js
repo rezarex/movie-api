@@ -42,7 +42,7 @@ const PORT = process.env.PORT || 3000
 const connectDB = require('./config/dbConfig.js')
 
 app.use('/v1',v1Auth);
-//app.use('/v2',v2Router);
+app.use('/v2',v2Router); //all v2 routes will come here
 app.use('/api/docs', swaggerUi.serve,swaggerUi.serve, swaggerUi.setup(swaggerSpec) )
 
 

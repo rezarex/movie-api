@@ -41,6 +41,7 @@ const createUser = async(req,res)=>{
         //     password  : hashedPassword,
         // });
        // newUser.save();
+       console.log(newUser)
         return res.json({message:'user created successfully'});}
 
     }catch(err){
