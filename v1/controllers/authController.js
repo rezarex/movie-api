@@ -6,12 +6,10 @@ const User = require('../../models/userModel')
 const createUser = async(req,res)=>{
     //console.log("Register");
     try{
-        const {Email, password} =req.body;
-<<<<<<< HEAD
+        //const {Email, password} =req.body;
         //find user with same email before accepting the registration details
 
-        const user = await user.findOne({ Email });
-=======
+        //const user = await user.findOne({ //Email });
         //find user with same email
 
         /**
@@ -20,12 +18,10 @@ const createUser = async(req,res)=>{
          * 
          */
         const user = await User.findOne({ email });
->>>>>>> a28bc7739e2414c1b2da2f3824e917bcaee4b00f
         if(user){
             return res.json({ message: 'user already exists'});
         }else{
 
-<<<<<<< HEAD
         //hash password to secure users password. 
 
         let hashedPassword;
@@ -33,13 +29,12 @@ const createUser = async(req,res)=>{
         hashedPassword = bcrypt.hashSync(password, salt);
         
         //save new user
-        const newUser = new user(
-        {
-            Email,
-            password  : hashedPassword,
-        });
-        newUser.save();
-=======
+        // const newUser = new user(
+        // {
+        //     Email,
+        //     password  : hashedPassword,
+        // });
+        // newUser.save();
             /**
              * All encryption is now done in the schema
              * here we dont need to deconstruct the req.body,
@@ -62,7 +57,6 @@ const createUser = async(req,res)=>{
         //     password  : hashedPassword,
         // });
        // newUser.save();
->>>>>>> a28bc7739e2414c1b2da2f3824e917bcaee4b00f
         return res.json({message:'user created successfully'});}
 
     }catch(err){
